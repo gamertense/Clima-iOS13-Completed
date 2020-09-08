@@ -6,8 +6,8 @@
 //  Copyright © 2019 App Brewery. All rights reserved.
 //
 
-import Foundation
 import CoreLocation
+import Foundation
 
 protocol WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel)
@@ -32,7 +32,7 @@ struct WeatherManager {
     func performRequest(with urlString: String) {
         if let url = URL(string: urlString) {
             let session = URLSession(configuration: .default)
-            let task = session.dataTask(with: url) { (data, response, error) in
+            let task = session.dataTask(with: url) { data, _, error in
                 if error != nil {
                     self.delegate?.didFailWithError(error: error!)
                     return
@@ -63,9 +63,4 @@ struct WeatherManager {
             return nil
         }
     }
-    
-    
-    
 }
-
-

@@ -6,15 +6,14 @@
 //  Copyright © 2019 App Brewery. All rights reserved.
 //
 
-import UIKit
 import CoreLocation
+import UIKit
 
 class WeatherViewController: UIViewController {
-    
-    @IBOutlet weak var conditionImageView: UIImageView!
-    @IBOutlet weak var temperatureLabel: UILabel!
-    @IBOutlet weak var cityLabel: UILabel!
-    @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet var conditionImageView: UIImageView!
+    @IBOutlet var temperatureLabel: UILabel!
+    @IBOutlet var cityLabel: UILabel!
+    @IBOutlet var searchTextField: UITextField!
     
     var weatherManager = WeatherManager()
     let locationManager = CLLocationManager()
@@ -29,13 +28,11 @@ class WeatherViewController: UIViewController {
         weatherManager.delegate = self
         searchTextField.delegate = self
     }
-
 }
 
-//MARK: - UITextFieldDelegate
+// MARK: - UITextFieldDelegate
 
 extension WeatherViewController: UITextFieldDelegate {
-    
     @IBAction func searchPressed(_ sender: UIButton) {
         searchTextField.endEditing(true)
     }
@@ -55,21 +52,17 @@ extension WeatherViewController: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        
         if let city = searchTextField.text {
             weatherManager.fetchWeather(cityName: city)
         }
         
         searchTextField.text = ""
-        
     }
 }
 
-//MARK: - WeatherManagerDelegate
-
+// MARK: - WeatherManagerDelegate
 
 extension WeatherViewController: WeatherManagerDelegate {
-    
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
         DispatchQueue.main.async {
             self.temperatureLabel.text = weather.temperatureString
@@ -83,11 +76,9 @@ extension WeatherViewController: WeatherManagerDelegate {
     }
 }
 
-//MARK: - CLLocationManagerDelegate
-
+// MARK: - CLLocationManagerDelegate
 
 extension WeatherViewController: CLLocationManagerDelegate {
-    
     @IBAction func locationPressed(_ sender: UIButton) {
         locationManager.requestLocation()
     }
