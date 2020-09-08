@@ -6,6 +6,7 @@
 //  Copyright © 2019 App Brewery. All rights reserved.
 //
 
+import Alamofire
 import CoreLocation
 import UIKit
 
@@ -71,8 +72,11 @@ extension WeatherViewController: WeatherManagerDelegate {
         }
     }
     
-    func didFailWithError(error: Error) {
+    func didFailWithError(error: AFError) {
         print(error)
+        let alert = UIAlertController(title: "Error!", message: error.errorDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+        present(alert, animated: true)
     }
 }
 
