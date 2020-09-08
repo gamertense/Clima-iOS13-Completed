@@ -16,12 +16,18 @@ protocol WeatherManagerDelegate {
 }
 
 struct WeatherManager {
-    let weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=e72ca729af228beabd5d20e3b7749713&units=metric"
+    let weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=79a16f0676fb71de785e8f980f330126&units=metric"
 
     var delegate: WeatherManagerDelegate?
 
     func fetchWeather(cityName: String) {
-        let urlString = "\(weatherURL)&q=\(cityName)"
+        let urlString: String
+        if cityName.contains(" ") {
+            let cityNameWithSpace = (cityName as NSString).replacingOccurrences(of: " ", with: "+")
+            urlString = "\(weatherURL)&q=\(cityNameWithSpace)"
+        } else {
+            urlString = "\(weatherURL)&q=\(cityName)"
+        }
         performRequest(with: urlString)
     }
 
